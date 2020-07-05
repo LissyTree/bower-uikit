@@ -2876,7 +2876,8 @@
         options = UI.$.extend(true, {bgclose:false, keyboard:false, modal:false, labels:UI.modal.labels}, options);
 
         var modal = UI.modal.dialog(([
-            '<div class="uk-margin uk-modal-content">'+String(content)+'</div>',
+            '<div class="uk-margin uk-modal-top"><h3>'+ 'Error' +'</h3></div>',
+            '<div class="uk-modal-content">'+String(content)+'</div>',
             '<div class="uk-modal-footer uk-text-right"><button class="uk-button uk-button-primary uk-modal-close">'+options.labels.Ok+'</button></div>'
         ]).join(""), options);
 
@@ -2890,6 +2891,15 @@
     };
 
     UI.modal.confirm = function(content, onconfirm, oncancel) {
+        if(content[1].length!=1){
+            var content_title = content[1];
+            content = content[0];
+        } else if(content=="Sind Sie sicher?"){
+            content_title = "Bestätigen";
+        } 
+        else {
+            content_title = "Confirm";
+        }
 
         var options = arguments.length > 1 && arguments[arguments.length-1] ? arguments[arguments.length-1] : {};
 
@@ -2898,7 +2908,8 @@
         options   = UI.$.extend(true, {bgclose:false, keyboard:false, modal:false, labels:UI.modal.labels}, UI.$.isFunction(options) ? {}:options);
 
         var modal = UI.modal.dialog(([
-            '<div class="uk-margin uk-modal-content">'+String(content)+'</div>',
+            '<div class="uk-margin uk-modal-top"><h3>'+ String(content_title) +'</h3></div>',
+            '<div class="uk-modal-content"><h4>'+ String(content)+'</h4></div>',
             '<div class="uk-modal-footer uk-text-right"><button class="uk-button js-modal-confirm-cancel">'+options.labels.Cancel+'</button> <button class="uk-button uk-button-primary js-modal-confirm">'+options.labels.Ok+'</button></div>'
         ]).join(""), options);
 
@@ -2922,7 +2933,7 @@
         options  = UI.$.extend(true, {bgclose:false, keyboard:false, modal:false, labels:UI.modal.labels}, options);
 
         var modal = UI.modal.dialog(([
-            text ? '<div class="uk-modal-content uk-form">'+String(text)+'</div>':'',
+            text ? '<div class=" uk-modal-top uk-form">'+String(text)+'</div>':'',
             '<div class="uk-margin-small-top uk-modal-content uk-form"><p><input type="text" class="uk-width-1-1"></p></div>',
             '<div class="uk-modal-footer uk-text-right"><button class="uk-button uk-modal-close">'+options.labels.Cancel+'</button> <button class="uk-button uk-button-primary js-modal-ok">'+options.labels.Ok+'</button></div>'
         ]).join(""), options),
